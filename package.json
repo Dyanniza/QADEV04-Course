@@ -1,0 +1,26 @@
+{
+  "name": "qadev04",
+  "version": "0.0.1",
+  "description": "practices with mochajs and superagent",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "watch":"mocha --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jfvf/QADEV04-Course.git"
+  },
+  "author": "qadev04",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfvf/QADEV04-Course/issues"
+  },
+  "homepage": "https://github.com/jfvf/QADEV04-Course",
+  "dependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3",
+    "superagent": "^1.4.0",
+    "superagent-proxy": "^1.0.0"
+  }
+}

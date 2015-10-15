@@ -25,7 +25,7 @@ describe('Smoke Tests for Projects',function(){
 			console.log(res.body);
 			expect(res.status).to.equal(200);
 			done();
-		})
+		});
 	});
 
 

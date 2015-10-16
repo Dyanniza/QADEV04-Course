@@ -1,4 +1,4 @@
-//CRUD example v1.0
+//acceptance tests with nested calls without modularizing
 
 var request = require('superagent');
 require('superagent-proxy')(request);
@@ -12,7 +12,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 		console.log('Getting the token...');
 		request
 			.get('https://todo.ly/api/authentication/token.json')
-			//.proxy('http://172.20.240.5:8080')
+			.proxy('http://172.20.240.5:8080')
 			.auth('gordines007@gmail.com','control123!@#')
 		.end(function(err,resp){
 			//creating the project
@@ -24,7 +24,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 			console.log('Creating a project...');
 			request
 				.post('https://todo.ly/api/projects.json')
-				//.proxy('http://172.20.240.5:8080')
+				.proxy('http://172.20.240.5:8080')
 				.set('token',token)//token
 				.send({Content:'PRSuperagent'})
 			.end(function(err, res){
@@ -38,7 +38,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 				console.log('Deleting the project...' + proj.Content);
 				request
 					.del('https://todo.ly/api/projects/'+proj.Id+'.json')
-					//.proxy('http://172.20.240.5:8080')
+					.proxy('http://172.20.240.5:8080')
 					.set('token',token)//token
 				.end(function(er,re){
 					var projDel = re.body;
@@ -49,7 +49,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 					console.log('Deleting the token...' + token);
 					request
 						.del('https://todo.ly/api/authentication/token.json')
-						//.proxy('http://172.20.240.5:8080')
+						.proxy('http://172.20.240.5:8080')
 						.set('token',token)//token
 					.end(function(err, res){
 						var tokenDel = res.body;
@@ -63,7 +63,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 		});
 	});
 
-	it.only('PUT /projects/[id].json when contains at least one item',function(done){
+	it('PUT /projects/[id].json when contains at least one item',function(done){
 		//getting the token
 		console.log('Getting the token...');
 		request
@@ -80,7 +80,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 			console.log('Creating a project...');
 			request
 				.post('https://todo.ly/api/projects.json')
-				//.proxy('http://172.20.240.5:8080')
+				.proxy('http://172.20.240.5:8080')
 				.set('token',token)//token
 				.send({Content:'ProjectWithItem'})
 			.end(function(err, res){
@@ -93,7 +93,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 				console.log('Creating an item under a project');
 				request
 					.post('https://todo.ly/api/items.json')
-					//.proxy('http://172.20.240.5:8080')
+					.proxy('http://172.20.240.5:8080')
 					.set('token',token)
 					.send({
 						Content:'ItemInsideProject',
@@ -108,7 +108,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 					//editing the project's name and icon
 					request
 						.put('https://todo.ly/api/projects/'+proj.Id+'.json')
-						//.proxy('http://172.20.240.5:8080')
+						.proxy('http://172.20.240.5:8080')
 						.set('token',token)
 						.send({
 							Content:'ProjectUpdated',
@@ -125,7 +125,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 						console.log('Deleting the project...' + proj.Content);
 						request
 							.del('https://todo.ly/api/projects/'+proj.Id+'.json')
-							//.proxy('http://172.20.240.5:8080')
+							.proxy('http://172.20.240.5:8080')
 							.set('token',token)//token
 						.end(function(er,re){
 							var projDel = re.body;
@@ -135,7 +135,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 							//deleting the item
 							request
 								.del('https://todo.ly/api/items/'+itemCreated.Id+'.json')
-								//.proxy('http://172.20.240.5:8080')
+								.proxy('http://172.20.240.5:8080')
 								.set('token',token)//token
 							.end(function(err,res){
 								var itemDeleted = res.body;
@@ -147,11 +147,11 @@ describe('CRUD operation over Todo.ly Projects',function(){
 
 								request
 									.del('https://todo.ly/api/authentication/token.json')
-									//.proxy('http://172.20.240.5:8080')
+									.proxy('http://172.20.240.5:8080')
 									.set('token',token)//token
 								.end(function(err, res){
 									var tokenDel = res.body;
-									//console.log('Token deleted...' + tokenDel.TokenString);
+									console.log('Token deleted...' + tokenDel.TokenString);
 									expect(tokenDel.TokenString).to.equal(token);
 									done();
 								});

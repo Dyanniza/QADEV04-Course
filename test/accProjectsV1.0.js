@@ -1,4 +1,5 @@
-//acceptance tests with nested calls without modularizing
+//acceptance tests CRUD with tons of verbosing and no modularization
+// which makes the mantainability too hard
 
 var request = require('superagent');
 require('superagent-proxy')(request);

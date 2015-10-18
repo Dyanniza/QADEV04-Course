@@ -11,7 +11,7 @@ describe('Token',function(){
 	it('GET /Authentication/token',function(done){
 		request
 			.get('https://todo.ly/api/authentication/token.json')
-			.proxy('http://172.20.240.5:8080')
+			//.proxy('http://172.20.240.5:8080')
 			.auth('gordines007@gmail.com','control123!@#')
 		.end(function(err, res){
 			console.log(res.body);
@@ -23,6 +23,7 @@ describe('Token',function(){
 			var regExpress = '[0-9]+';
 			var expireDate = res.body.ExpirationTime.match(regExpress);
 
+			console.log(expireDate);
 			var date = new Date();
 			var currentDate = date.getTime();
 

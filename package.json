@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "watch":"mocha --watch"
+    "watch": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "dependencies": {
     "chai": "^3.3.0",
     "mocha": "^2.3.3",
+    "moment": "^2.10.6",
     "superagent": "^1.4.0",
     "superagent-proxy": "^1.0.0"
   }

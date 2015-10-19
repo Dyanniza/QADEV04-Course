@@ -1,4 +1,5 @@
 //CRUD example v1.0
+https://github.com/JFVF/QADEV04-Course
 
 var request = require('superagent');
 require('superagent-proxy')(request);
@@ -16,21 +17,25 @@ describe('CRUD operation over Todo.ly Projects',function(){
 	};
 	var tk = null;
 
+	before('Getting the token',function(done){
+		//getting the token
+		tokenAPI
+			.get(userCredential,function(res){
+				tk = res.body;
+				expect(tk.UserEmail).to.equal(userCredential.userAccount);
+				done();
+			});
+	});
+	
 	it('POST /projects returns 200',function(done){
 		var prj = {
 			Content:'Proyecto Refactoring',
 			Icon:8
 		};
 
-		//getting the token
-		tokenAPI
-			.get(userCredential,function(res){
-				var tk = res.body;
-
-				expect(tk.UserEmail).to.equal(userCredential.userAccount);
 				
-				projectsAPI
-					.create(prj,tk.TokenString,function(res){
+		projectsAPI
+			.create(prj,tk.TokenString,function(res){
 						var prjCreated = res.body;
 						var lastSyncedDate = dateHandler.getDateFromUnixTimeStamp(prjCreated.LastSyncedDateTime.match('[0-9]+'));//the date in milisecond it is in first position
 						var currentDate = dateHandler.getDateFromUnixTimeStamp((new Date()).getTime());
@@ -64,23 +69,19 @@ describe('CRUD operation over Todo.ly Projects',function(){
 							});
 
 					});
-			});		
+			
 	});
 
 	//assuming the pre and pos conditions don't need assertions
 	it('PUT /projects/[id].json returns 200',function(done){
-		//getting the token
-		tokenAPI
-			.get(userCredential,function(res){
-				tk = res.body;
+		
+		//create a project
+		var bProject = {
+			Content:'Base Project'
+		};
 
-				//create a project
-				var bProject = {
-					Content:'Base Project'
-				};
-
-				projectsAPI
-					.create(bProject,tk.TokenString,function(res){
+		projectsAPI
+			.create(bProject,tk.TokenString,function(res){
 							var prjCreated = res.body;
 
 							//editing the project
@@ -119,7 +120,7 @@ describe('CRUD operation over Todo.ly Projects',function(){
 					
 				});
 
-		});
+		
 	});
 });
 
